@@ -117,20 +117,7 @@ namespace TabsColor
         /// <param name="e">Event args.</param>
         private void Execute(object sender, EventArgs e)
         {
-            //TODO: 直接切换tabs为正则表达式
-            ThreadHelper.ThrowIfNotOnUIThread();
-            string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-            string title = "SetTabsColor";
-
-            // Show a message box to prove we were here
-            VsShellUtilities.ShowMessageBox(
-                this.package,
-                message,
-                title,
-                OLEMSGICON.OLEMSGICON_INFO,
-                OLEMSGBUTTON.OLEMSGBUTTON_OK,
-                OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
-            //IDG_VS_FILE_SAVE
+            DarwTabsColor().Forget();
         }
 
         private bool _isWaitingForTabsCommand;
@@ -202,12 +189,15 @@ namespace TabsColor
                 {
                     var content = File.ReadAllText(cofigPath);
                     //查找是否有标记符 有则替换
-                    Regex pattern = new Regex("//TabsColorTag\n(.*?)\n//TabsColorTag");
+                    Regex pattern = new Regex("//TabsColorTag\n(.*?)\n//TabsColorTag\n");
                     Match match = pattern.Match(content);
                     if (match.Success)
                     {
                         string extractedContent = match.Value;
-                        string newContent = Regex.Replace(content, extractedContent, newRegex);
+                        if (extractedContent == newRegex)
+                            return;
+                        
+                        string newContent = content.Replace(extractedContent, newRegex);
                         Console.WriteLine("Extracted content: " + extractedContent);
                         File.WriteAllText(cofigPath, newContent);
                     }
@@ -238,7 +228,7 @@ namespace TabsColor
         /// <returns></returns>
         private string GetCurRegexByGit()
         {
-            string regex = "//TabsColorTag\n^.*(?:#)\\.cs$\n//TabsColorTag";
+            string regex = "//TabsColorTag\n^.*(?:#)\\.cs$\n//TabsColorTag\n";
             StringBuilder sb = new StringBuilder();
             foreach (var item in _modifyNames)
             {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="TabsColor.36ac46d8-9efb-4b82-b944-1d098ac8ea11" Version="1.1" Language="en-US" Publisher="nolor" />
+        <Identity Id="TabsColor.36ac46d8-9efb-4b82-b944-1d098ac8ea11" Version="1.2" Language="en-US" Publisher="nolor" />
         <DisplayName>TabsColor</DisplayName>
         <Description xml:space="preserve">enjoy Tabs color by git status to develop as vscode e</Description>
         <Icon>SetTabsColor.png</Icon>
